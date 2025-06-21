@@ -54,21 +54,21 @@ print(f"Current EMA: {moving_average.iloc[-1]:.2f}")
 
 ### Trend Indicators
 
--**EMA** - Exponential Moving Average
+- **EMA** - Exponential Moving Average
 
--**SuperTrend** - Trend following indicator
+- **SuperTrend** - Trend following indicator
 
--**Normalized T3** - Smoothed trend oscillator
+- **Normalized T3** - Smoothed trend oscillator
 
 ### Momentum Indicators
 
--**RSI** - Relative Strength Index (0-100 scale)
+- **RSI** - Relative Strength Index (0-100 scale)
 
--**ADX** - Average Directional Index
+- **ADX** - Average Directional Index
 
 ### Volatility Indicators
 
--**ATR** - Average True Range
+- **ATR** - Average True Range
 
 ### Comparative Indicators
 
@@ -219,11 +219,11 @@ from tradelab.indicators import*
 from tradelab.indicators import rsi, ema
 
 
-# Import by category
+# Import candles
 
-from tradelab.indicators.momentum import rsi
+from tradelab.candles import renko, heikin_ashi
 
-from tradelab.indicators.trend import ema
+from tradelab.candles import *
 
 ```
 
