@@ -1,12 +1,13 @@
 # TradeLab
 
-A simple and powerful Python package for algorithmic trading and technical analysis. Calculate technical indicators and analyze market data with ease.
+A simple and powerful Python package for algorithmic trading and technical analysis. Calculate technical indicators, create alternative candle charts, and analyze market data with ease.
 
 ## What Does It Do?
 
 TradeLab helps you:
 
 - Calculate technical indicators (moving averages, RSI, SuperTrend, etc.)
+- Create alternative candle charts (Heikin Ashi, Renko)
 - Compare different stocks or assets
 - Analyze market data without complex coding
 
@@ -71,9 +72,38 @@ print(f"Current EMA: {moving_average.iloc[-1]:.2f}")
 
 ### Comparative Indicators
 
--**Relative Strength** - Compare two stocks or assets
+- **Relative Strength** - Compare two stocks or assets
+
+## Available Candles
+
+### Alternative Chart Types
+
+- **Heikin Ashi** - Smoothed candlesticks for clearer trend visualization
+- **Renko** - Price movement based boxes that filter out time and minor price movements
 
 ## Examples
+
+### Calculate Heikin Ashi candles
+
+```python
+from tradelab.candles import heikin_ashi
+
+# Transform regular OHLC data to Heikin Ashi
+ha_data = heikin_ashi(data)
+print("Heikin Ashi data:")
+print(ha_data.tail())
+```
+
+### Calculate Renko charts
+
+```python
+from tradelab.candles import renko
+
+# Create Renko bricks with fixed brick size
+renko_data = renko(data, brick_size=25, mode='normal')
+print("Renko bricks:")
+print(renko_data.tail())
+```
 
 ### Calculate RSI values
 

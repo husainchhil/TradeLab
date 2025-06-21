@@ -1,6 +1,6 @@
 [project]
 name = "tradelab"
-version = "0.1.0"
+version = "0.1.1"
 description = "A simple and powerful Python package for algorithmic trading and technical analysis. Calculate technical indicators and analyze market data with ease."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -15,4 +15,4 @@ authors = [
 { name = "Husain Chhil", email = "hychhil@gmail.com" }]
 
 [project.urls]
-Homepage = "https://github.com/husinchhil/TradeLab"
+Homepage = "https://github.com/husainchhil/TradeLab"
