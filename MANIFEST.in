@@ -1,0 +1,57 @@
+# Include essential package files
+include README.md
+include LICENSE
+include pyproject.toml
+include uv.lock
+
+# Include the main package
+recursive-include tradelab *.py
+
+# Include any data files if needed
+# recursive-include tradelab *.json *.yaml *.yml
+
+# Exclude Python-generated files (from .gitignore)
+global-exclude __pycache__
+global-exclude *.py[oc]
+global-exclude *.pyo
+global-exclude *.pyc
+global-exclude *.ipynb
+
+# Exclude build artifacts (from .gitignore)
+global-exclude build/
+global-exclude dist/
+global-exclude wheels/
+global-exclude *.egg-info
+
+# Exclude virtual environments (from .gitignore)
+global-exclude .venv
+global-exclude .env
+
+# Exclude debugging files (from .gitignore)
+exclude Debugging
+exclude Debugging/*
+global-exclude Debugging
+global-exclude Debugging/*
+
+# Exclude development and testing files
+global-exclude .git*
+global-exclude .pytest_cache
+global-exclude .coverage
+global-exclude .tox
+global-exclude .mypy_cache
+global-exclude .DS_Store
+global-exclude Thumbs.db
+global-exclude .github
+global-exclude .github/*
+
+# Exclude IDE files
+global-exclude .vscode
+global-exclude .idea
+global-exclude *.swp
+global-exclude *.swo
+global-exclude *~
+
+# Exclude temporary files
+global-exclude *.tmp
+global-exclude *.temp
+global-exclude *.log
