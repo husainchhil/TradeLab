@@ -20,8 +20,7 @@ class EMA(BaseIndicator):
         :return: Series of EMA values.
         """
         self.validate_period(period)
-        if not isinstance(src, pd.Series):
-            raise ValueError("Source must be a pandas Series.")
+        self.validate_series(src, "src")
 
         values = src.values
         ema = np.empty_like(values, dtype=float)

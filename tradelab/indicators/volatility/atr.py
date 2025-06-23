@@ -21,7 +21,9 @@ class ATR(BaseIndicator):
         :return: Series of ATR values.
         """
         self.validate_period(period)
-        self.validate_hlc(high, low, close)
+        self.validate_series(high, "high")
+        self.validate_series(low, "low")
+        self.validate_series(close, "close")
 
         tr1 = high - low
         tr2 = np.abs(high - close.shift(1))

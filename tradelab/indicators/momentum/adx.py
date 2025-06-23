@@ -10,23 +10,6 @@ class ADX(BaseIndicator):
 
     def __init__(self):
         super().__init__("ADX")
-
-    def validate_data(self, high: pd.Series, low: pd.Series, close: pd.Series) -> None:
-        """
-        Validate input data for ADX calculation.
-
-        :param high: Series of high prices.
-        :param low: Series of low prices.
-        :param close: Series of close prices.
-        """
-        if not isinstance(high, pd.Series) or not isinstance(low, pd.Series) or not isinstance(close, pd.Series):
-            raise TypeError("High, low, and close must be pandas Series.")
-        
-        if len(high) != len(low) or len(high) != len(close):
-            raise ValueError("High, low, and close must have the same length.")
-        
-        if any(high < 0) or any(low < 0) or any(close < 0):
-            raise ValueError("High, low, and close prices must be non-negative.")
         
     def validate_period(self, di_length: int, adx_smoothing: int) -> None:
         """
@@ -51,7 +34,9 @@ class ADX(BaseIndicator):
         """
 
         # Validate and normalize data
-        self.validate_data(high, low, close)
+        self.validate_series(high, "high")
+        self.validate_series(low, "low")
+        self.validate_series(close, "close")
         self.validate_period(di_length, adx_smoothing)
 
         up = high.diff()

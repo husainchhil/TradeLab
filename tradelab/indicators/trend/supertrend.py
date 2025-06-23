@@ -24,7 +24,9 @@ class SuperTrend(BaseIndicator):
         """
         self.validate_period(period)
         self.validate_multiplier(multiplier)
-        self.validate_hlc(high, low, close)
+        self.validate_series(high, "high")
+        self.validate_series(low, "low")
+        self.validate_series(close, "close")
 
         atr_values = atr(high, low, close, period=period)
         hl2 = (high + low) / 2

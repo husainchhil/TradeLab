@@ -38,8 +38,7 @@ class RSI(BaseIndicator):
         """
 
         self.validate_period(period)
-        if not isinstance(src, pd.Series):
-            raise ValueError("Source must be a pandas Series.")
+        self.validate_series(src, "src")
 
         # Calculate price changes
         change = src.diff()
