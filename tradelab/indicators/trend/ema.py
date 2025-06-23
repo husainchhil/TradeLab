@@ -1,7 +1,7 @@
 """Exponential Moving Average (EMA) indicator implementation."""
 
+import numpy as np
 import pandas as pd
-import talib
 from ..base import BaseIndicator
 
 
@@ -11,39 +11,34 @@ class EMA(BaseIndicator):
     def __init__(self):
         super().__init__("EMA")
 
-    def calculate(self, data: pd.DataFrame, period: int = 20, column: str = 'close') -> pd.Series:
+    def calculate(self, src: pd.Series, period: int = 20) -> pd.Series:
         """
         Calculate the Exponential Moving Average (EMA) indicator.
 
-        :param data: DataFrame containing OHLCV data.
+        :param src: Source prices (source for EMA calculation).
         :param period: The period for the EMA calculation.
-        :param column: The column to calculate EMA for (default: 'close').
         :return: Series of EMA values.
         """
         self.validate_period(period)
+        if not isinstance(src, pd.Series):
+            raise ValueError("Source must be a pandas Series.")
 
-        # Validate and normalize data
-        required_cols = {column.lower()}
-        normalized_data = self.validate_data(data, required_cols)
-
-        return pd.Series(
-            talib.EMA(
-                normalized_data[column.lower()].values,
-                timeperiod=period
-            ),
-            name="EMA",
-            index=normalized_data.index
-        )
+        values = src.values
+        ema = np.empty_like(values, dtype=float)
+        alpha = 2 / (period + 1)
+        ema[0] = values[0]
+        for i in range(1, len(values)):
+            ema[i] = alpha * values[i] + (1 - alpha) * ema[i - 1]
+        return pd.Series(ema, name="EMA", index=src.index)
 
 
-def ema(data: pd.DataFrame, period: int = 20, column: str = 'close') -> pd.Series:
+def ema(src: pd.Series, period: int = 20) -> pd.Series:
     """
     Calculate the Exponential Moving Average (EMA) indicator (functional interface).
 
-    :param data: DataFrame containing OHLCV data.
+    :param src: Source prices (source for EMA calculation).
     :param period: The period for the EMA calculation.
-    :param column: The column to calculate EMA for (default: 'close').
     :return: Series of EMA values.
     """
     indicator = EMA()
-    return indicator.calculate(data, period=period, column=column)
+    return indicator.calculate(src, period=period)

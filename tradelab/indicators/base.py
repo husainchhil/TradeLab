@@ -54,6 +54,20 @@ class BaseIndicator(ABC):
 
         return normalized_data
 
+    def validate_hlc(self, high: pd.Series, low: pd.Series, close: pd.Series) -> None:
+        """
+        Validate the input data for SuperTrend calculation.
+
+        :param high: High prices (Series).
+        :param low: Low prices (Series).
+        :param close: Close prices (Series).
+        :raises ValueError: If the input data is not valid.
+        """
+        if not isinstance(high, pd.Series) or not isinstance(low, pd.Series) or not isinstance(close, pd.Series):
+            raise ValueError("High, low, and close must be pandas Series.")
+        if len(high) != len(low) or len(low) != len(close):
+            raise ValueError("High, low, and close must have the same length.")
+
     def validate_period(self, period: int, min_value: int = 1) -> None:
         """
         Validate period parameter.
