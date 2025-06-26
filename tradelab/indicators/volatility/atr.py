@@ -1,7 +1,6 @@
 """Average True Range (ATR) indicator implementation."""
 
 import numpy as np
-import talib
 import pandas as pd
 from ..base import BaseIndicator
 

@@ -1,6 +1,5 @@
 """SuperTrend indicator implementation."""
 
-import fixedta as ta
 import pandas as pd
 from ..base import BaseIndicator
 from ..volatility import atr

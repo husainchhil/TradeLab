@@ -17,6 +17,8 @@ class Renko(BaseCandle):
         super().__init__("Renko")
 
         df = self.validate_data(df)
+        if not isinstance(brick_size, (int, float)):
+            raise TypeError("brick_size must be an int or float")
 
         if brick_size is None or brick_size <= 0:
             raise ValueError("brick_size cannot be 'None' or '<= 0'")
@@ -203,7 +205,7 @@ class Renko(BaseCandle):
         return df
 
 
-def renko(df: pd.DataFrame, brick_size: float, mode: str = "wicks") -> pd.DataFrame:
+def renko(data: pd.DataFrame, brick_size: float, mode: str = "wicks") -> pd.DataFrame:
     """
     Calculate Renko candles (functional interface).
 
@@ -212,5 +214,5 @@ def renko(df: pd.DataFrame, brick_size: float, mode: str = "wicks") -> pd.DataFr
     :param mode: Mode for calculating Renko bricks.
     :return: DataFrame with Renko candles.
     """
-    renko = Renko(df, brick_size)
+    renko = Renko(df=data, brick_size=brick_size)
     return renko.calculate(mode)

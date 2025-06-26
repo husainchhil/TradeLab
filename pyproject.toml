@@ -5,11 +5,9 @@ description = "A simple and powerful Python package for algorithmic trading and 
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "fixedta>=0.0.6",
     "numpy>=2.3.0",
     "pandas>=2.3.0",
     "pydantic>=2.11.7",
-    "ta-lib>=0.6.4",
 ]
 authors = [
 { name = "Husain Chhil", email = "hychhil@gmail.com" }]

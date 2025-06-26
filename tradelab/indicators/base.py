@@ -2,8 +2,7 @@
 
 from abc import ABC, abstractmethod
 import pandas as pd
-from typing import Union, Dict, Any
-
+from typing import Union
 
 class BaseIndicator(ABC):
     """
@@ -32,7 +31,7 @@ class BaseIndicator(ABC):
         """
         pass
 
-    def validate_data(self, data: pd.DataFrame, required_columns: set) -> pd.DataFrame:
+    def validate_data(self, data: pd.DataFrame, required_columns: set = {'open', 'high', 'low', 'close', 'volume'}) -> pd.DataFrame:
         """
         Validate input data and ensure required columns exist.
 

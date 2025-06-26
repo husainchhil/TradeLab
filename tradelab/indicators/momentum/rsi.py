@@ -1,6 +1,5 @@
 """Relative Strength Index (RSI) indicator implementation."""
 
-import talib
 import pandas as pd
 from ..base import BaseIndicator
 
