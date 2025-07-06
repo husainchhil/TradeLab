@@ -1,5 +1,3 @@
-"""Volatility indicators module."""
+"""ATR (Average True Range) indicator module."""
 
-from .atr import atr, ATR
-
-__all__ = ['atr', 'ATR']
+from .wrapper import ATR

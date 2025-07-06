@@ -37,11 +37,11 @@ data = pd.read_csv('your_stock_data.csv')
 
 # Calculate indicators
 
-rsi_values =rsi(data,period=14)
+rsi_values = rsi(data,period=14)
 
-moving_average =ema(data,period=20)
+moving_average = ema(data,period=20)
 
-trend_data =supertrend(data,period=10,multiplier=3.0)
+trend_data = supertrend(data,period=10,multiplier=3.0)
 
 
 print(f"Current RSI: {rsi_values.iloc[-1]:.2f}")
@@ -55,15 +55,12 @@ print(f"Current EMA: {moving_average.iloc[-1]:.2f}")
 ### Trend Indicators
 
 - **EMA** - Exponential Moving Average
-
 - **SuperTrend** - Trend following indicator
-
 - **Normalized T3** - Smoothed trend oscillator
 
 ### Momentum Indicators
 
 - **RSI** - Relative Strength Index (0-100 scale)
-
 - **ADX** - Average Directional Index
 
 ### Volatility Indicators
@@ -140,12 +137,12 @@ from tradelab.indicators import relative_strength
 
 # Compare Apple vs S&P 500
 
-apple_data = pd.read_csv('AAPL.csv')
+apple_data = pd.read_csv('AAPL.csv')['close']
 
-spy_data = pd.read_csv('SPY.csv')
+spy_data = pd.read_csv('SPY.csv')['close']
 
 
-comparison =relative_strength(apple_data, spy_data)
+comparison = relative_strength(apple_data, spy_data)
 
 print(f"Apple vs S&P 500 strength: {comparison['relative_strength'].iloc[-1]:.4f}")
 
@@ -160,11 +157,11 @@ from tradelab.indicators import rsi, ema, atr
 
 # Calculate multiple indicators at once
 
-rsi_14 =rsi(data,period=14)
+rsi_14 = rsi(data,period=14)
 
-ema_20 =ema(data,period=20)
+ema_20 = ema(data,period=20)
 
-volatility =atr(data,period=14)
+volatility = atr(data,period=14)
 
 
 print(f"RSI(14): {rsi_14.iloc[-1]:.2f}")

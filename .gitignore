@@ -11,3 +11,5 @@ wheels/
 .env
 *.ipynb
 .pypirc
+*.pyd
+*.html
