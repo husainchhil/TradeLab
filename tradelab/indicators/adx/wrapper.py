@@ -1,6 +1,7 @@
 """ADX Python wrapper for preserving docstring visibility in IDEs."""
 
 from .adx import ADX as _ADX_cython
+from ...utils import validate_series
 
 
 def ADX(high, low, close, di_length=14, adx_smoothing=14):
@@ -52,4 +53,11 @@ def ADX(high, low, close, di_length=14, adx_smoothing=14):
     - ADX values below 20 indicate a weak trend or sideways movement
     - This implementation uses Cython for optimized performance
     """
+    validate_series(high, "High")
+    validate_series(low, "Low")
+    validate_series(close, "Close")
+    if not isinstance(di_length, int) or di_length <= 0:
+        raise ValueError("DI length must be a positive integer")
+    if not isinstance(adx_smoothing, int) or adx_smoothing <= 0:
+        raise ValueError("ADX smoothing must be a positive integer")
     return _ADX_cython(high, low, close, di_length, adx_smoothing)

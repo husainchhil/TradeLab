@@ -1,6 +1,7 @@
 """EMA Python wrapper for preserving docstring visibility in IDEs."""
 
 from .ema import EMA as _EMA_cython
+from ...utils import validate_series
 
 
 def EMA(src, period):
@@ -41,4 +42,7 @@ def EMA(src, period):
     - The smoothing factor alpha = 2/(period + 1)
     - This implementation uses Cython for optimized performance
     """
+    validate_series(src, "Source")
+    if not isinstance(period, int) or period <= 0:
+        raise ValueError("Period must be a positive integer")
     return _EMA_cython(src, period)

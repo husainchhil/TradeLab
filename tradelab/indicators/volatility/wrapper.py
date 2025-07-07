@@ -1,6 +1,7 @@
 """ATR Python wrapper for preserving docstring visibility in IDEs."""
 
 from .atr import ATR as _ATR_cython
+from ...utils import validate_series
 
 
 def ATR(high, low, close, period=14):
@@ -52,4 +53,11 @@ def ATR(high, low, close, period=14):
     - This implementation uses Cython for optimized performance
     - Uses RMA (Rolling Moving Average) smoothing with alpha = 1/period
     """
+    validate_series(high, "High")
+    validate_series(low, "Low")
+    validate_series(close, "Close")
+
+    if not isinstance(period, int) or period <= 0:
+        raise ValueError("Period must be a positive integer")
+
     return _ATR_cython(high, low, close, period)

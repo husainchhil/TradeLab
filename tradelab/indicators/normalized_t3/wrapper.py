@@ -1,6 +1,7 @@
 """Normalized T3 Python wrapper for preserving docstring visibility in IDEs."""
 
 from .normalized_t3 import NORMALIZED_T3 as _NORMALIZED_T3_cython
+from ...utils import validate_series
 
 
 def NORMALIZED_T3(src, period=200, t3_period=2, volume_factor=0.7):
@@ -46,4 +47,12 @@ def NORMALIZED_T3(src, period=200, t3_period=2, volume_factor=0.7):
     - T3 provides multiple stages of exponential smoothing
     - This implementation uses Cython for optimized performance
     """
+    validate_series(src, "Source")
+    if not isinstance(period, int) or period <= 0:
+        raise ValueError("Period must be a positive integer")
+    if not isinstance(t3_period, int) or t3_period <= 0:
+        raise ValueError("T3 period must be a positive integer")
+    if not isinstance(volume_factor, (int, float)) or not (0 < volume_factor < 1):
+        raise ValueError("Volume factor must be a float between 0 and 1")
+
     return _NORMALIZED_T3_cython(src, period, t3_period, volume_factor)
