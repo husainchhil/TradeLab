@@ -1,7 +1,7 @@
 """EMA Python wrapper for preserving docstring visibility in IDEs."""
 
 from .ema import EMA as _EMA_cython
-from ...utils import validate_series
+from ...utils.validate_data import validate_series
 
 
 def EMA(src, period):

@@ -1,7 +1,7 @@
 """Normalized T3 Python wrapper for preserving docstring visibility in IDEs."""
 
 from .normalized_t3 import NORMALIZED_T3 as _NORMALIZED_T3_cython
-from ...utils import validate_series
+from ...utils.validate_data import validate_series
 
 
 def NORMALIZED_T3(src, period=200, t3_period=2, volume_factor=0.7):

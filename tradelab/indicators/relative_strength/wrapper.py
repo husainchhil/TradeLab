@@ -1,7 +1,7 @@
 """RELATIVE_STRENGTH Python wrapper for preserving docstring visibility in IDEs."""
 
 from .relative_strength import RELATIVE_STRENGTH as _RELATIVE_STRENGTH_cython
-
+from ...utils.validate_data import validate_series
 
 def RELATIVE_STRENGTH(base_data, comparative_data, length=55, base_shift=5, rs_ma_length=50, price_sma_length=50):
     """
@@ -69,5 +69,8 @@ def RELATIVE_STRENGTH(base_data, comparative_data, length=55, base_shift=5, rs_m
 
     if not isinstance(price_sma_length, int) or price_sma_length <= 0:
         raise ValueError("Price SMA length must be a positive integer")
+    
+    validate_series(base_data, "Base Data")
+    validate_series(comparative_data, "Comparative Data")
 
     return _RELATIVE_STRENGTH_cython(base_data, comparative_data, length, base_shift, rs_ma_length, price_sma_length)

@@ -1,7 +1,7 @@
 """ADX Python wrapper for preserving docstring visibility in IDEs."""
 
 from .adx import ADX as _ADX_cython
-from ...utils import validate_series
+from ...utils.validate_data import validate_series
 
 
 def ADX(high, low, close, di_length=14, adx_smoothing=14):

@@ -2,23 +2,6 @@ import pandas as pd
 import numpy as np
 
 
-def validate_series(series, name):
-    """Validate pandas Series input."""
-    if isinstance(series, np.ndarray):
-        if series.ndim > 1:
-            raise ValueError(f"{name} must be a 1-dimensional array")
-        series = pd.Series(data=series, name=name)
-
-    if not isinstance(series, (pd.Series, np.ndarray)):
-        raise TypeError(f"{name} must be a pandas Series or numpy array")
-    if series.empty:
-        raise ValueError(f"{name} series cannot be empty")
-    if not np.isfinite(series).all():
-        raise ValueError(f"{name} series contains null or infinite values")
-
-    return series
-
-
 def resample_ohlcv(
     df: pd.DataFrame,
     freq: str = "1H",
@@ -71,15 +54,16 @@ def resample_ohlcv(
     # Validate input DataFrame
     if not isinstance(df, pd.DataFrame):
         raise TypeError("Input must be a pandas DataFrame")
-    
+
     if df.empty:
         raise ValueError("Input DataFrame cannot be empty")
-    
+
     df.columns = df.columns.str.strip().str.capitalize()
-    
+
     required_columns = {'Open', 'High', 'Low', 'Close', 'Volume'}
     if not required_columns.issubset(df.columns):
-        raise ValueError(f"Input DataFrame must contain the following columns: {required_columns}")
+        raise ValueError(
+            f"Input DataFrame must contain the following columns: {required_columns}")
 
     # Check if this is weekly resampling
     if freq.upper().endswith('W'):
@@ -96,7 +80,7 @@ def _resample_weekly(df: pd.DataFrame, freq: str, anchor: str) -> pd.DataFrame:
         'MON': f'{freq}-MON', 'TUE': f'{freq}-TUE', 'WED': f'{freq}-WED',
         'THU': f'{freq}-THU', 'FRI': f'{freq}-FRI', 'SAT': f'{freq}-SAT', 'SUN': f'{freq}-SUN'
     }
-    
+
     if anchor.upper() in day_mapping:
         weekly_freq = day_mapping[anchor.upper()]
     else:
@@ -123,12 +107,12 @@ def _resample_intraday(df: pd.DataFrame, freq: str, anchor: str) -> pd.DataFrame
     """Handle intraday resampling with time anchor."""
     freq_ns = pd.to_timedelta(freq).value
     anchor_td = pd.to_timedelta(anchor)
-    
+
     # Calculate bin assignments for each timestamp
     idx = df.index
     day_start = idx.normalize()
     time_since_anchor = (idx - day_start - anchor_td).astype('int64')
-    
+
     # Filter out data before anchor time
     valid_mask = time_since_anchor >= 0
     if not valid_mask.any():
@@ -136,26 +120,27 @@ def _resample_intraday(df: pd.DataFrame, freq: str, anchor: str) -> pd.DataFrame
         result = df.head(0).copy()
         result.index.name = 'Date'
         return result
-    
+
     df_valid = df[valid_mask].copy()
     idx_valid = df_valid.index
     day_valid = idx_valid.normalize()
     time_valid = (idx_valid - day_valid - anchor_td).astype('int64')
-    
+
     # Calculate bin starts
     bin_indices = np.floor_divide(time_valid, freq_ns)
-    bin_starts = day_valid + anchor_td + pd.to_timedelta(bin_indices * freq_ns, unit="ns")
-    
+    bin_starts = day_valid + anchor_td + \
+        pd.to_timedelta(bin_indices * freq_ns, unit="ns")
+
     df_valid["bin_start"] = bin_starts
-    
+
     agg_rules = {
         "Open": "first",
-        "High": "max", 
+        "High": "max",
         "Low": "min",
         "Close": "last",
         "Volume": "sum",
     }
-    
+
     result = (
         df_valid
         .groupby("bin_start", sort=True)
@@ -164,3 +149,6 @@ def _resample_intraday(df: pd.DataFrame, freq: str, anchor: str) -> pd.DataFrame
     )
     result.index.name = 'Date'
     return result
+
+
+__all__ = ['resample_ohlcv']

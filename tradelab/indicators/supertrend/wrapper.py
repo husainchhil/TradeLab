@@ -1,6 +1,7 @@
 """SUPERTREND Python wrapper for preserving docstring visibility in IDEs."""
 
 from .supertrend import SUPERTREND as _SUPERTREND_cython
+from ...utils.validate_data import validate_series
 
 
 def SUPERTREND(high, low, close, period=10, multiplier=3.0):
@@ -63,5 +64,9 @@ def SUPERTREND(high, low, close, period=10, multiplier=3.0):
 
     if not isinstance(multiplier, (int, float)) or multiplier <= 0:
         raise ValueError("Multiplier must be a positive number")
+    
+    validate_series(high, "High")
+    validate_series(low, "Low")
+    validate_series(close, "Close")
 
     return _SUPERTREND_cython(high, low, close, period, multiplier)

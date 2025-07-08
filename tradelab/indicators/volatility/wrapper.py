@@ -1,7 +1,7 @@
 """ATR Python wrapper for preserving docstring visibility in IDEs."""
 
 from .atr import ATR as _ATR_cython
-from ...utils import validate_series
+from ...utils.validate_data import validate_series
 
 
 def ATR(high, low, close, period=14):

@@ -1,6 +1,7 @@
 """RSI Python wrapper for preserving docstring visibility in IDEs."""
 
 from .rsi import RSI as _RSI_cython
+from ...utils.validate_data import validate_series
 
 
 def RSI(src, period=14):
@@ -47,5 +48,7 @@ def RSI(src, period=14):
     """
     if not isinstance(period, int) or period <= 0:
         raise ValueError("Period must be a positive integer")
+    
+    validate_series(src, "Source")
 
     return _RSI_cython(src, period)
