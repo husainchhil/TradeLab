@@ -1,12 +1,16 @@
+[build-system]
+requires = ["setuptools>=64", "wheel", "Cython>=3.0.0", "numpy>=2.3.0"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "tradelab"
-version = "0.1.2"
+version = "0.2.0"
 description = "A simple and powerful Python package for algorithmic trading and technical analysis. Calculate technical indicators and analyze market data with ease."
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "numpy>=2.3.0",
-    "pandas>=2.3.0",
+    "numpy<=2.2.0",
+    "pandas<=2.2.3",
     "pydantic>=2.11.7",
 ]
 authors = [
@@ -14,3 +18,10 @@ authors = [
 
 [project.urls]
 Homepage = "https://github.com/husainchhil/TradeLab"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["tradelab*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.pyx", "*.pxd"]

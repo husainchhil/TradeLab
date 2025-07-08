@@ -2,10 +2,15 @@
 include README.md
 include LICENSE
 include pyproject.toml
+include setup.py
 include uv.lock
 
 # Include the main package
 recursive-include tradelab *.py
+
+# Include Cython source files
+recursive-include tradelab *.pyx
+recursive-include tradelab *.pxd
 
 # Include any data files if needed
 # recursive-include tradelab *.json *.yaml *.yml

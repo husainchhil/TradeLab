@@ -13,3 +13,4 @@ wheels/
 .pypirc
 *.pyd
 *.html
+*.c

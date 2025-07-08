@@ -98,7 +98,7 @@ class CythonCompiler:
 
         try:
             # Run the setup script
-            cmd = [sys.executable, "setup_cython.py", "build_ext", "--inplace"]
+            cmd = [sys.executable, "setup.py", "build_ext", "--inplace"]
             result = subprocess.run(
                 cmd, cwd=self.project_root, capture_output=True, text=True)
 
