@@ -77,7 +77,7 @@ def SUPERTREND(high, low, close, int period = 10, double multiplier = 3.0):
     # Calculate SuperTrend
     for i in range(1, length):
         # Determine trend direction based on previous close vs previous supertrend
-        if close_data[i-1] <= supertrend[i-1]:
+        if close_data[i] <= supertrend[i-1]:
             direction[i] = -1  # Downtrend
         else:
             direction[i] = 1   # Uptrend
