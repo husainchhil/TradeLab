@@ -7,3 +7,5 @@ from .volatility import ATR
 from .adx import ADX
 from .rsi import RSI
 from .relative_strength import RELATIVE_STRENGTH
+from .donchian_channels import DONCHIAN_CHANNELS
+from .macd import MACD
