@@ -4,7 +4,7 @@ from .atr import ATR as _ATR_cython
 from ...utils.validate_data import validate_series
 
 
-def ATR(high, low, close, period=14):
+def ATR(high, low, close, period=14, smoothing="RMA"):
     """
     Calculate Average True Range (ATR) using Cython for performance.
 
@@ -21,6 +21,8 @@ def ATR(high, low, close, period=14):
         Close prices (numpy array or pandas Series)
     period : int, optional
         The period for ATR calculation (default: 14)
+    smoothing : str, optional
+        Smoothing type: "RMA", "SMA", "EMA", or "WMA" (default: "RMA")
 
     Returns
     -------
@@ -51,7 +53,7 @@ def ATR(high, low, close, period=14):
       * |Current Low - Previous Close|
     - ATR is the smoothed average of True Range values
     - This implementation uses Cython for optimized performance
-    - Uses RMA (Rolling Moving Average) smoothing with alpha = 1/period
+    - RMA is equivalent to EMA with alpha = 1/period
     """
     validate_series(high, "High")
     validate_series(low, "Low")
@@ -60,4 +62,18 @@ def ATR(high, low, close, period=14):
     if not isinstance(period, int) or period <= 0:
         raise ValueError("Period must be a positive integer")
 
-    return _ATR_cython(high, low, close, period)
+    if not isinstance(smoothing, str):
+        raise TypeError("Smoothing must be a string")
+
+    smoothing_upper = smoothing.upper()
+    if smoothing_upper not in ("RMA", "SMA", "EMA", "WMA"):
+        raise ValueError("Smoothing must be one of: 'RMA', 'SMA', 'EMA', 'WMA'")
+
+    smoothing_map = {
+        "RMA": 0,
+        "SMA": 1,
+        "EMA": 2,
+        "WMA": 3,
+    }
+
+    return _ATR_cython(high, low, close, period, smoothing_map[smoothing_upper])

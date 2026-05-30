@@ -56,10 +56,11 @@ renko_chart = RENKO(data, brick_size=1.0, mode='wicks')
 ### Trend Indicators
 
 - **EMA** - Exponential Moving Average
+- **Moving Average** - Simple or Exponential (SMA/EMA)
 - **SuperTrend** - Trend-following indicator with dynamic support/resistance
 - **Normalized T3** - Triple exponential moving average with volume factor
 
-### Momentum Indicators  
+### Momentum Indicators
 
 - **RSI** - Relative Strength Index (0-100 oscillator)
 - **ADX** - Average Directional Index (trend strength)
@@ -134,7 +135,7 @@ TradeLab uses Cython for performance-critical calculations, providing significan
 tradelab/
 ├── indicators/           # Technical indicators
 │   ├── ema/             # Exponential Moving Average
-│   ├── rsi/             # Relative Strength Index  
+│   ├── rsi/             # Relative Strength Index
 │   ├── supertrend/      # SuperTrend indicator
 │   ├── adx/             # Average Directional Index
 │   ├── normalized_t3/   # Normalized T3 Moving Average
@@ -151,7 +152,7 @@ tradelab/
 ### Build System
 
 - **`setup.py`** - Main build configuration with Cython support
-- **`pyproject.toml`** - Modern Python packaging configuration  
+- **`pyproject.toml`** - Modern Python packaging configuration
 - **`MANIFEST.in`** - Package file inclusion rules
 
 ### Development Tools
@@ -203,7 +204,7 @@ python compile_cython.py --clean
 ## Requirements
 
 - **Python**: ≥3.11
-- **NumPy**: ≤2.2.0  
+- **NumPy**: ≤2.2.0
 - **Pandas**: ≤2.2.3
 - **Pydantic**: ≥2.11.7
 
@@ -246,4 +247,4 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ---
 
-*TradeLab - High-performance technical analysis for algorithmic trading*
+_TradeLab - High-performance technical analysis for algorithmic trading_

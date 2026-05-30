@@ -10,3 +10,4 @@ from .relative_strength import RELATIVE_STRENGTH
 from .donchian_channels import DONCHIAN_CHANNELS
 from .macd import MACD
 from .stochastic import STOCHASTIC
+from .moving_average import MOVING_AVERAGE
