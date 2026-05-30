@@ -6,7 +6,7 @@ def resample_ohlcv(
     df: pd.DataFrame,
     freq: str = "1H",
     anchor: str = "09:15:00"
-) -> pd.DataFrame:
+ ) -> pd.DataFrame:
     """
     Resample OHLCV (Open, High, Low, Close, Volume) data to a specified frequency.
 
@@ -57,6 +57,13 @@ def resample_ohlcv(
 
     if df.empty:
         raise ValueError("Input DataFrame cannot be empty")
+
+    if not isinstance(df.index, pd.DatetimeIndex):
+        try:
+            df = df.copy()
+            df.index = pd.to_datetime(df.index)
+        except Exception as exc:
+            raise TypeError("Input DataFrame must have a DatetimeIndex") from exc
 
     df.columns = df.columns.str.strip().str.capitalize()
 
@@ -111,7 +118,7 @@ def _resample_intraday(df: pd.DataFrame, freq: str, anchor: str) -> pd.DataFrame
     # Calculate bin assignments for each timestamp
     idx = df.index
     day_start = idx.normalize()
-    time_since_anchor = (idx - day_start - anchor_td).astype('int64')
+    time_since_anchor = (idx - day_start - anchor_td).astype("timedelta64[ns]").view("int64")
 
     # Filter out data before anchor time
     valid_mask = time_since_anchor >= 0
@@ -124,7 +131,7 @@ def _resample_intraday(df: pd.DataFrame, freq: str, anchor: str) -> pd.DataFrame
     df_valid = df[valid_mask].copy()
     idx_valid = df_valid.index
     day_valid = idx_valid.normalize()
-    time_valid = (idx_valid - day_valid - anchor_td).astype('int64')
+    time_valid = (idx_valid - day_valid - anchor_td).astype("timedelta64[ns]").view("int64")
 
     # Calculate bin starts
     bin_indices = np.floor_divide(time_valid, freq_ns)
